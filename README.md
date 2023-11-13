@@ -48,7 +48,8 @@ gcloud projects add-iam-policy-binding hanzawa-yuya \
 * 必要に応じてスクリプトやライブラリを変更する
 
 ```
-bash CloudFunctions/deploy.sh
+cd CloudFunctions/
+bash ./deploy.sh
 ```
 
 ## 2.2. Cloud Functionsを起動する権限を付与
@@ -75,11 +76,10 @@ gcloud iam workload-identity-pools create "github-actions" \
 * 3.1で作成したWorkload Identityプールにプロバイダを追加する
 
 ```
-gcloud iam workload-identity-pools providers create-oidc "GitHub" \
+gcloud iam workload-identity-pools providers create-oidc "github" \
     --location="global" \
     --workload-identity-pool="github-actions" \
     --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository" \
-    --attribute-condition="yuya-hanzawa/exec_cloud_functions_by_github_actions == attribute.repository" \
     --issuer-uri="https://token.actions.githubusercontent.com"
 ```
 
