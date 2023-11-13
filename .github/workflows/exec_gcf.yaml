@@ -1,0 +1,35 @@
+name: Exec Cloud Funcstions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  exec:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: 'id_token'
+          workload_identity_provider: 'projects/868908576898/locations/global/workloadIdentityPools/gituhb-actions/providers/gituhb'
+          service_account: 'sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com'
+          id_token_audience: 'https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/exec_gcf_by_github_actions'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+
+      - id: 'exec-gcf'
+        run: |-
+          curl -m 70 -X POST https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/exec_gcf_by_github_actions \
+            -H "Authorization: bearer ${{ steps.auth.outputs.id_token }}" \
+            -H "Content-Type: application/json"
