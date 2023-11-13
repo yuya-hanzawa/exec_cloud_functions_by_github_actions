@@ -19,9 +19,9 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           token_format: 'id_token'
-          workload_identity_provider: 'projects/868908576898/locations/global/workloadIdentityPools/gituhb-actions/providers/gituhb'
+          workload_identity_provider: 'projects/868908576898/locations/global/workloadIdentityPools/github-actions/providers/github'
           service_account: 'sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com'
-          id_token_audience: 'https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/exec_gcf_by_github_actions'
+          id_token_audience: 'https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/hello-world'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
@@ -30,6 +30,6 @@ jobs:
 
       - id: 'exec-gcf'
         run: |-
-          curl -m 70 -X POST https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/exec_gcf_by_github_actions \
+          curl -m 70 -X POST https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/hello-world \
             -H "Authorization: bearer ${{ steps.auth.outputs.id_token }}" \
             -H "Content-Type: application/json"
