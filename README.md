@@ -71,7 +71,7 @@ gcloud iam workload-identity-pools create "github-actions" \
     --location="global"
 ```
 
-## 3.2. Workload Identityプロバイダを追加する
+## 3.2. Workload Identityプールにプロバイダを追加する
 
 * 3.1で作成したWorkload Identityプールにプロバイダを追加する
 
