@@ -20,7 +20,7 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           token_format: 'id_token'
-          workload_identity_provider: 'projects/868908576898/locations/global/workloadIdentityPools/github-actions/providers/github'
+          workload_identity_provider: 'projects/868908576898/locations/global/workloadIdentityPools/github-actions/attribute.repository/yuya-hanzawa/exec_cloud_functions_by_github_actions'
           service_account: 'sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com'
           id_token_audience: 'https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/hello-world'
 
