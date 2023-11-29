@@ -6,7 +6,13 @@
 
 # 環境
 
-# 設定
+# 設定手順
+
+大まかな手順は以下の通りです。
+
+1. サービスアカウントを準備する
+2. 呼び出すCloud Functionsを準備する
+3. GitHub Actionsで使用するWorkload Identity Federationを準備する
 
 ## 1. SAを準備する
 
