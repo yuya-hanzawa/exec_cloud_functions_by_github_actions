@@ -22,14 +22,14 @@ Google Cloud
 
 Cloud FunctionsとGitHub Actionsで使用するSAを準備する
 
-* Cloud Functions用にSA`sa-gcf-executor`を作成
+* Cloud Functions用にSA`sa-gcf-executor`を作成する
 
 ```
 gcloud iam service-accounts create sa-gcf-executor \
     --display-name=sa-gcf-executor
 ```
 
-* GitHub Actions用にSA`sa-github-actions`を作成
+* GitHub Actions用にSA`sa-github-actions`を作成する
 
 ```
 gcloud iam service-accounts create sa-github-actions \
@@ -38,7 +38,7 @@ gcloud iam service-accounts create sa-github-actions \
 
 ## 1.2. SAに必要な権限を付与する
 
-* `sa-github-actions`にサービスアカウントトークン作成者（`roles/iam.serviceAccountTokenCreator`）の権限をプロジェクトレベルで付与
+* `sa-github-actions`にサービスアカウントトークン作成者（`roles/iam.serviceAccountTokenCreator`）の権限をプロジェクトレベルで付与する
 
 ```
 gcloud projects add-iam-policy-binding hanzawa-yuya \
@@ -62,7 +62,7 @@ bash ./deploy.sh
 
 ## 2.2. Cloud Functionsを起動する権限を付与
 
-* `sa-github-actions`にCloud Run起動元（`roles/run.invoker`）の権限を2.1で作成したCloud Functions単体レベルで付与
+* `sa-github-actions`にCloud Run起動元（`roles/run.invoker`）の権限を2.1で作成したCloud Functions単体レベルで付与する
 
 ```
 gcloud functions add-invoker-policy-binding hello-world \
