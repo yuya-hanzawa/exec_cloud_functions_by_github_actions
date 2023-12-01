@@ -42,7 +42,7 @@ gcloud iam service-accounts create sa-github-actions \
 
 ```
 gcloud projects add-iam-policy-binding <PROJECT_ID> \
-    --member=serviceAccount:sa-gcf-executor@<PROJECT_ID>.iam.gserviceaccount.com \
+    --member=serviceAccount:sa-github-actions@<PROJECT_ID>.iam.gserviceaccount.com \
     --role=roles/iam.serviceAccountTokenCreator \
     --condition=None
 ```
@@ -90,6 +90,7 @@ gcloud iam workload-identity-pools providers create-oidc "github" \
     --location="global" \
     --workload-identity-pool="github-actions" \
     --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository" \
+    --attribute-condition= "attribute.repository== 'yuya-hanzawa/exec_cloud_functions_by_github_actions'"\
     --issuer-uri="https://token.actions.githubusercontent.com"
 ```
 
@@ -99,7 +100,7 @@ gcloud iam workload-identity-pools providers create-oidc "github" \
 REPO="yuya-hanzawa/exec_cloud_functions_by_github_actions"
 WORKLOAD_IDENTITY_POOL_ID=$(gcloud iam workload-identity-pools describe github-actions --location="global" --format=json | jq -r .name)
 
-gcloud iam service-accounts add-iam-policy-binding "sa-github-actions@<PROJECT_ID>.iam.gserviceaccount.com" \
+gcloud iam service-accounts add-iam-policy-binding "sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com" \
     --role="roles/iam.workloadIdentityUser" \
     --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository/${REPO}"
 ```
