@@ -41,24 +41,26 @@ gcloud iam service-accounts create sa-github-actions \
 * `sa-github-actions`にサービスアカウントトークン作成者（`roles/iam.serviceAccountTokenCreator`）の権限をプロジェクトレベルで付与する
 
 ```
-gcloud projects add-iam-policy-binding hanzawa-yuya \
-    --member=serviceAccount:sa-gcf-executor@hanzawa-yuya.iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding <PROJECT_ID> \
+    --member=serviceAccount:sa-gcf-executor@<PROJECT_ID>.iam.gserviceaccount.com \
     --role=roles/iam.serviceAccountTokenCreator \
     --condition=None
 ```
 
-* 必要に応じて`sa-gcf-executor`にも権限を付与する
+必要に応じて、`sa-gcf-executor`にも権限を付与する
 
 # 2. Cloud Functionsを準備する
 
 ## 2.1. Cloud Functionsをデプロイする
 
-必要に応じて、スクリプトやライブラリを変更してください
+* 今回はPythonで **Hello World!** と出力するシンプルなソースコードをデプロイしています。
 
 ```
 cd CloudFunctions/
 bash ./deploy.sh
 ```
+
+必要に応じて、スクリプトやライブラリを変更してください
 
 ## 2.2. Cloud Functionsを起動する権限を付与
 
@@ -67,7 +69,7 @@ bash ./deploy.sh
 ```
 gcloud functions add-invoker-policy-binding hello-world \
     --region='asia-northeast1' \
-    --member='serviceAccount:sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com'
+    --member='serviceAccount:sa-github-actions@<PROJECT_ID>.iam.gserviceaccount.com'
 ```
 
 # 3. Workload Identity Federationを準備する
@@ -97,7 +99,7 @@ gcloud iam workload-identity-pools providers create-oidc "github" \
 REPO="yuya-hanzawa/exec_cloud_functions_by_github_actions"
 WORKLOAD_IDENTITY_POOL_ID=$(gcloud iam workload-identity-pools describe github-actions --location="global" --format=json | jq -r .name)
 
-gcloud iam service-accounts add-iam-policy-binding "sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com" \
+gcloud iam service-accounts add-iam-policy-binding "sa-github-actions@<PROJECT_ID>.iam.gserviceaccount.com" \
     --role="roles/iam.workloadIdentityUser" \
     --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository/${REPO}"
 ```
