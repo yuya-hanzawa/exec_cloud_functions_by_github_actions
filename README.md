@@ -53,7 +53,7 @@ gcloud projects add-iam-policy-binding hanzawa-yuya \
 
 ## 2.1. Cloud Functionsをデプロイする
 
-* 必要に応じてスクリプトやライブラリを変更する
+必要に応じて、スクリプトやライブラリを変更してください
 
 ```
 cd CloudFunctions/
