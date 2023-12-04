@@ -90,7 +90,6 @@ gcloud iam workload-identity-pools providers create-oidc "github" \
     --location="global" \
     --workload-identity-pool="github-actions" \
     --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository" \
-    --attribute-condition= "attribute.repository== 'yuya-hanzawa/exec_cloud_functions_by_github_actions'"\
     --issuer-uri="https://token.actions.githubusercontent.com"
 ```
 
