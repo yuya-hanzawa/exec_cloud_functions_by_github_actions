@@ -72,7 +72,7 @@ gcloud functions add-invoker-policy-binding hello-world \
     --member='serviceAccount:sa-github-actions@<PROJECT_ID>.iam.gserviceaccount.com'
 ```
 
-# 3. Workload Identity Federationを準備する
+# 3. Workload Identityを準備する
 
 ## 3.1. Workload Identityプールを作成する
 
@@ -99,7 +99,7 @@ gcloud iam workload-identity-pools providers create-oidc "github" \
 REPO="yuya-hanzawa/exec_cloud_functions_by_github_actions"
 WORKLOAD_IDENTITY_POOL_ID=$(gcloud iam workload-identity-pools describe github-actions --location="global" --format=json | jq -r .name)
 
-gcloud iam service-accounts add-iam-policy-binding "sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com" \
+gcloud iam service-accounts add-iam-policy-binding "sa-github-actions@<PROJECT_ID>.iam.gserviceaccount.com" \
     --role="roles/iam.workloadIdentityUser" \
     --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository/${REPO}"
 ```
