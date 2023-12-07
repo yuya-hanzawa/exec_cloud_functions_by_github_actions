@@ -1,4 +1,4 @@
-name: Exec Cloud Funcstions
+name: Exec Cloud Functions
 
 on:
   workflow_dispatch:
@@ -24,10 +24,10 @@ jobs:
           service_account: 'sa-github-actions@hanzawa-yuya.iam.gserviceaccount.com'
           id_token_audience: 'https://asia-northeast1-hanzawa-yuya.cloudfunctions.net/hello-world'
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-        with:
-          version: '>= 363.0.0'
+      # - name: 'Set up Cloud SDK'
+      #   uses: 'google-github-actions/setup-gcloud@v1'
+      #   with:
+      #     version: '>= 363.0.0'
 
       - name: 'Exec Cloud Functions'
         run: |-
